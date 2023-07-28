@@ -1,3 +1,4 @@
+
 //function to get low-rpm sounds (input is aircraft id)
 function fetchAircraftSoundsLow(aircraft1) {
 try {
@@ -143,3 +144,5 @@ setTimeout(() => {
 })
 };
 multiplayerSoundInterval = setInterval(function(){computeSounds()},1000)
+//debug loop
+setInterval(function(){console.log(soundPlaying)},500)
