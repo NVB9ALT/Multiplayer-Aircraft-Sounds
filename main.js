@@ -127,4 +127,4 @@ audio.impl.html5.playFile(fetchAircraftSoundsLow(e.aircraft))
 	},2000)
 })
 };
-multiplayerSoundInterval = setInterval(function(){computeSounds()},1000)
+multiplayerSoundInterval = setInterval(function(){computeSounds()},2000)
