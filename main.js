@@ -108,24 +108,38 @@ if (aircraft2 == 18) {
 throw("Error: sound loading failed 2. " + error)
 }
 }
-//some method of correcting for wind is needed (i think)
 var lastAirspeed = null;
 function computeSounds() {
 //for every visible user
 Object.values(multiplayer.visibleUsers).forEach(function(e){
+//control sound playing
+e.soundPlaying = null;
 //previous airspeed
 lastAirspeed = e.lastUpdate.st.as
-//after five seconds, has airspeed changed or something?
+//after one second, has airspeed changed?
 setTimeout(() => {
-	if (e.referencePoint.lla[2] - geofs.aircraft.instance.llaLocation[2] <= 1000 && geofs.aircraft.instance.llaLocation[2] - e.referencePoint.lla[2] <= 1000 && e.distance < 500 && e.lastUpdate.st.as >= 50 && (e.lastUpdate.st.as - lastAirspeed) >= -1) {
+	if (e.referencePoint.lla[2] - geofs.aircraft.instance.llaLocation[2] <= 1000 && geofs.aircraft.instance.llaLocation[2] - e.referencePoint.lla[2] <= 1000 && e.distance < 1000 && e.lastUpdate.st.as >= 50 && (e.lastUpdate.st.as - lastAirspeed) >= -5 && e.soundPlaying != true) {
 audio.impl.html5.playFile(fetchAircraftSoundsHigh(e.aircraft))
-	} else if (e.referencePoint.lla[2] - geofs.aircraft.instance.llaLocation[2] <= 1000 && geofs.aircraft.instance.llaLocation[2] - e.referencePoint.lla[2] <= 1000 && e.distance < 500 && e.lastUpdate.st.as <= 49 && (e.lastUpdate.st.as - lastAirspeed) >= 5) {
+//sound is playing
+e.soundPlaying = true;
+//set sound to not playing when it finishes in about 6 seconds
+setTimeout(() => {
+   e.soundPlaying = false;
+},6000)
+	} else if (e.referencePoint.lla[2] - geofs.aircraft.instance.llaLocation[2] <= 1000 && geofs.aircraft.instance.llaLocation[2] - e.referencePoint.lla[2] <= 1000 && e.distance < 1000 && e.lastUpdate.st.as <= 49 && (e.lastUpdate.st.as - lastAirspeed) >= 5 && e.soundPlaying != true) {
 audio.impl.html5.playFile(fetchAircraftSoundsHigh(e.aircraft))
-	} else if (e.referencePoint.lla[2] - geofs.aircraft.instance.llaLocation[2] <= 1000 && geofs.aircraft.instance.llaLocation[2] - e.referencePoint.lla[2] <= 1000 && e.distance < 500) {
+e.soundPlaying = true;
+setTimeout(() => {
+   e.soundPlaying = false;
+},6000)
+	} else if (e.referencePoint.lla[2] - geofs.aircraft.instance.llaLocation[2] <= 1000 && geofs.aircraft.instance.llaLocation[2] - e.referencePoint.lla[2] <= 1000 && e.distance < 1000 && e.soundPlaying != true) {
 audio.impl.html5.playFile(fetchAircraftSoundsLow(e.aircraft))
+e.soundPlaying = true;
+setTimeout(() => {
+   e.soundPlaying = false;
+},6000)
 	}
-	},5750)
+	},1000)
 })
 };
-//most aircraft sound files are about six seconds long - so we set the interval to that
-multiplayerSoundInterval = setInterval(function(){computeSounds()},6000)
+multiplayerSoundInterval = setInterval(function(){computeSounds()},1000)
