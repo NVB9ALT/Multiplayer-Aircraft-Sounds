@@ -109,11 +109,11 @@ throw("Error: sound loading failed 2. " + error)
 }
 }
 var lastAirspeed = null;
+//control sound playing
+var soundPlaying = null;
 function computeSounds() {
 //for every visible user
 Object.values(multiplayer.visibleUsers).forEach(function(e){
-//control sound playing
-var soundPlaying = null;
 //previous airspeed
 lastAirspeed = e.lastUpdate.st.as
 //after one second, has airspeed changed?
