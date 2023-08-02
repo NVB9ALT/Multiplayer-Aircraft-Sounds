@@ -1,5 +1,7 @@
 # Multiplayer-Aircraft-Sounds
 
+NOTICE: Currently in re-development, sounds are very loud at the moment. Simply reduce your computer's volume by half and you'll be experiencing the addon the way I want it. I will try and reduce the volume later so you don't have to do this (obviously).
+
 This adds multiplayer aircraft sounds to GeoFS. You copy the code and paste it into the console.
 
 You will not hear sounds from unsupported multiplayer aircraft. Most official GeoFS aircraft are supported, however some official aircraft and CC aircraft are not supported. CC aircraft are not supported because there are just too many of them.
